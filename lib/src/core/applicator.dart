@@ -5,12 +5,12 @@ import 'package:flutter_apply/src/core/extensions/delayed.dart';
 // Can't be const because _id can't be const (toplevel functions with type
 // params can't be const?) throws a runtime error if const instead of final.
 // ignore: prefer_const_constructors
-final Applicator apply = _IDApplicator();
+final Applicator apply = IDApplicator();
 
 T _id<T>(T t) => t;
 
-class _IDApplicator extends Applicator {
-  const _IDApplicator() : super._(_id);
+class IDApplicator extends Applicator {
+  const IDApplicator() : super._(_id);
 }
 
 class Applicator {
