@@ -1,6 +1,4 @@
-
-import 'package:flutter/material.dart';
-import 'package:flutter_apply/src/core/applicator_second_class.dart';
+part of 'applicator_second_class.dart';
 
 ListApplicator listApply(Widget Function(Iterable<Widget>) builder) =>
     ListApplicator._(builder);
