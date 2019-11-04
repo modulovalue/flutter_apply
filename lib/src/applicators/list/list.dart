@@ -78,7 +78,7 @@ ListApplicator onListView({EdgeInsets padding, bool reverse, bool shrinkWrap}) {
   return listApply((children) {
     return ListView(
       padding: padding,
-      reverse: reverse,
+      reverse: reverse ?? false,
       shrinkWrap: shrinkWrap ?? false,
       children: children.toList(),
       scrollDirection: Axis.vertical,
@@ -91,7 +91,7 @@ ListApplicator onListViewH(
   return listApply((children) {
     return ListView(
       padding: padding,
-      reverse: reverse,
+      reverse: reverse ?? false,
       shrinkWrap: shrinkWrap ?? false,
       children: children.toList(),
       scrollDirection: Axis.horizontal,

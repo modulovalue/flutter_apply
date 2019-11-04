@@ -7,9 +7,13 @@ Applicator flatButton(void Function() onPressed) {
   });
 }
 
-Applicator fab(void Function() onPressed) {
+Applicator fab(void Function() onPressed, {String tooltip}) {
   return apply((child) {
-    return FloatingActionButton(onPressed: onPressed, child: child);
+    return FloatingActionButton(
+      tooltip: tooltip,
+      onPressed: onPressed,
+      child: child,
+    );
   });
 }
 
