@@ -5,12 +5,12 @@ import 'package:flutter_apply/flutter_apply.dart';
 ///
 /// An applies [apply] [Applicator] won't have
 /// an effect on participating [Applicator]s.
-const IDApplicator apply = IDApplicator._();
+const IDApplicator apply = IDApplicator();
 
 Widget _id(Widget t) => t;
 
 class IDApplicator extends Applicator {
-  const IDApplicator._() : super._(_id);
+  const IDApplicator() : super(_id);
 
   /// Allows each [apply] to create new [Applicator]s.
   ///
@@ -19,14 +19,14 @@ class IDApplicator extends Applicator {
   ///   apply((child) => ...);
   ///
   Applicator call(Widget Function(Widget child) applyNew) {
-    return Applicator._((child) => applyWidget(applyNew(child)));
+    return Applicator((child) => applyWidget(applyNew(child)));
   }
 }
 
 class Applicator {
   final Widget Function(Widget) _apply;
 
-  const Applicator._(this._apply);
+  const Applicator(this._apply);
 
   /// Applies this [Applicator] to [child].
   Widget applyWidget(Widget child) => _apply(child);
