@@ -18,6 +18,7 @@ export 'src/applicators/other.dart';
 export 'src/applicators/padding.dart';
 export 'src/applicators/size.dart';
 export 'src/applicators/text.dart';
+export 'src/applicators/transformation.dart';
 export 'src/applicators/widgets.dart';
 export 'src/core/applicator.dart';
 export 'src/core/applicator_second_class.dart';
