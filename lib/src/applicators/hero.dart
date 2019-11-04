@@ -61,6 +61,7 @@ class _MyRectTween extends Tween<Rect> {
   @override
   Rect lerp(double t) {
     final rect = RectTween(begin: from, end: to).lerp(t);
+    // Fixes a hero new-line bug
     return Rect.fromLTRB(rect.left, rect.top, rect.right + 1.0, rect.bottom);
   }
 }
@@ -75,15 +76,10 @@ Applicator _applyHeroStyle({
     switch (style) {
       case HeroAnimationStyle.lerp:
         final fromTheme = Theme.of(fromHeroContext);
-
         final toTheme = Theme.of(toHeroContext);
-
         final fromTS = DefaultTextStyle.of(fromHeroContext).style;
-
         final toTS = DefaultTextStyle.of(toHeroContext).style;
-
         final fromIT = IconTheme.of(fromHeroContext);
-
         final toIT = IconTheme.of(toHeroContext);
 
         return Theme(

@@ -101,6 +101,35 @@ Applicator expandableSingleChildScrollViewV() {
   });
 }
 
+Applicator aboveZ(
+    Iterable<Widget> Function(BuildContext, BoxConstraints) aboveAll) {
+  return onLayoutBuilder((context, constraints, child) {
+    return Stack(
+      alignment: Alignment.topCenter,
+      fit: StackFit.expand,
+      children: [
+        // content
+        positioned(
+                left: 0,
+                top: 0,
+                width: constraints.maxWidth,
+                height: constraints.maxHeight) >
+            child,
+        ...aboveAll(context, constraints),
+      ],
+    );
+  });
+}
+
+Applicator listTileLeading() {
+  return apply((child) {
+    return onRowMin() >>
+        [
+          Container(alignment: Alignment.center, child: child),
+        ];
+  });
+}
+
 ImageProvider emptyImage = MemoryImage(Uint8List.fromList(<int>[
   0x89,
   0x50,
@@ -181,6 +210,3 @@ const Duration ms300 = Duration(milliseconds: 300);
 const Duration ms400 = Duration(milliseconds: 400);
 
 const Duration ms500 = Duration(milliseconds: 500);
-
-Iterable<MapEntry<int, T>> indexedIterable<T>(Iterable<T> children) =>
-    children.toList().asMap().entries;

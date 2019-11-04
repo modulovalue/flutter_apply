@@ -12,12 +12,12 @@ ListApplicator onGrid(int crossExtentCount,
 }
 
 ListBuilderApplicator onGridBuilder(int count, SliverGridDelegate delegate,
-    {EdgeInsets padding, bool keepAlive, bool reverse}) {
+    {EdgeInsets padding, bool keepAlive, bool reverse, bool shrinkWrap}) {
   return listApplyBuilder((builder) {
     return GridView.builder(
         gridDelegate: delegate,
         itemBuilder: builder,
-        shrinkWrap: true,
+        shrinkWrap: shrinkWrap ?? false,
         itemCount: count,
         padding: padding,
         reverse: reverse ?? false);

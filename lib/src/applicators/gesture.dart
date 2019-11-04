@@ -22,3 +22,18 @@ Applicator onTapUp(void Function(TapUpDetails) execute,
         [HitTestBehavior behavior]) =>
     apply((child) =>
         GestureDetector(onTapUp: execute, behavior: behavior, child: child));
+
+Applicator inkwell({
+  void Function() onTap,
+  void Function() onLongPress,
+  BorderRadius borderRadius,
+}) {
+  return apply((child) {
+    return InkWell(
+      onTap: onTap,
+      onLongPress: onLongPress,
+      borderRadius: borderRadius,
+      child: child,
+    );
+  });
+}

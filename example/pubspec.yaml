@@ -1,6 +1,4 @@
-name: flutter_apply
-description: A new way to write and compose Flutter Widgets without boilerplate code.
-version: 0.1.0
+name: example
 homepage: https://www.github.com/modulovalue/flutter_apply
 author: Modestas Valauskas <valauskasmodestas+dartpub@gmail.com>
 
@@ -10,6 +8,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_apply:
+    path: ../
 
 dev_dependencies:
   test: any

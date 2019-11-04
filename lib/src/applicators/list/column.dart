@@ -1,8 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_apply/flutter_apply.dart';
 
-ListApplicator centeredColumn() =>
-    listApply((children) => center() > onColumnMinCenterCenter() >> children);
+ListApplicator onColumn() {
+  return listApply((children) {
+    return Column(
+      children: children.toList(),
+    );
+  });
+}
+
+ListApplicator onColumnMin() {
+  return listApply((children) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: children.toList(),
+    );
+  });
+}
+
+ListApplicator onColumnMax() {
+  return listApply((children) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      children: children.toList(),
+    );
+  });
+}
 
 ListApplicator onColumnCenter() {
   return listApply((children) {
@@ -189,28 +212,8 @@ ListApplicator onColumnMinStartStretch() {
   });
 }
 
-ListApplicator onColumn() {
+ListApplicator centeredColumn() {
   return listApply((children) {
-    return Column(
-      children: children.toList(),
-    );
-  });
-}
-
-ListApplicator onColumnMin() {
-  return listApply((children) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: children.toList(),
-    );
-  });
-}
-
-ListApplicator onColumnMax() {
-  return listApply((children) {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      children: children.toList(),
-    );
+    return center() > onColumnMinCenterCenter() >> children;
   });
 }

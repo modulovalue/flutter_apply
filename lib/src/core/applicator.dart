@@ -1,60 +1,89 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_apply/src/core/extensions/apply_on_preferred_widget.dart';
-import 'package:flutter_apply/src/core/extensions/delayed.dart';
+import 'package:flutter_apply/flutter_apply.dart';
 
+/// The 'null' [Applicator].
+///
+/// An applies [apply] [Applicator] won't have
+/// an effect on participating [Applicator]s.
 // Can't be const because _id can't be const (toplevel functions with type
-// params can't be const?) throws a runtime error if const instead of final.
+// params can't be const?) throws a runtime error if set to const.
 // ignore: prefer_const_constructors
-final Applicator apply = IDApplicator();
+final IDApplicator apply = IDApplicator._();
 
 T _id<T>(T t) => t;
 
 class IDApplicator extends Applicator {
-  const IDApplicator() : super._(_id);
+  const IDApplicator._() : super._(_id);
+
+  /// Allows each [apply] to create new [Applicator]s.
+  ///
+  /// Example:
+  ///
+  ///   apply((child) => ...);
+  ///
+  Applicator call(Widget Function(Widget child) applyNew) {
+    return Applicator._((child) => applyWidget(applyNew(child)));
+  }
 }
 
 class Applicator {
-  Widget applyWidget(Widget child) => _apply(child);
-
   final Widget Function(Widget) _apply;
 
   const Applicator._(this._apply);
 
+  /// Applies this [Applicator] to [child].
+  Widget applyWidget(Widget child) => _apply(child);
+
+  /// Combines this [Applicator] with the passed [Applicator] into
+  /// a new [Applicator].
+  ///
+  /// Example:
+  ///
+  ///   apply & apply
+  ///
+  /// The left applicator is applied first.
   Applicator operator &(Applicator operator) {
-    return apply((a) {
-      return applyWidget(operator.applyWidget(a));
+    return apply((a) => applyWidget(operator.applyWidget(a)));
+  }
+
+  /// Same as [applyWidget] applies this [Applicator] to [child].
+  Widget operator >(Widget child) {
+    return applyWidget(child);
+  }
+
+  /// Applies this [Applicator] to every child in [children].
+  List<Widget> operator *(Iterable<Widget> children) {
+    return children.map(applyWidget).toList();
+  }
+
+  /// Converts this [Applicator] into a [PreferredApplicator].
+  PreferredApplicator preferredSize(Size size, [Key key]) {
+    return PreferredApplicator._((child) {
+      return PreferredSize(
+        key: key,
+        preferredSize: size,
+        child: applyWidget(child),
+      );
     });
   }
 
-  Widget operator >(Widget w) {
-    return applyWidget(w);
-  }
-
-  List<Widget> operator *(Iterable<Widget> w) {
-    return w.map(applyWidget).toList();
-  }
-
-  Applicator call(Widget Function(Widget child) applyNew) {
-    return apply((child) {
-      return applyWidget(applyNew(child));
-    });
-  }
-
-  PreferredSizeWidget applyOnPrefWidget(PreferredSizeWidget child) {
-    return ApplyOnPreferredSizeWidget(child, this);
-  }
-
+  /// Disables this [Applicator] when [condition] is false.
+  ///
+  /// If you specify [orElse] this [Applicator] will be
+  /// replaced with it when [condition] is false.
   Applicator when(bool condition, {Applicator orElse}) {
     if (condition) {
       return this;
     } else {
+      // should this apply a SizedBox as a performance optimization
+      // (to keep the widget tree depth the same)?
       return orElse ?? apply;
     }
   }
+}
 
-  Applicator delayed(Duration duration) {
-    return apply((child) {
-      return DelayedWidget(applicator: this, duration: duration, child: child);
-    });
-  }
+class PreferredApplicator
+    extends SecondClassApplicator<Widget, PreferredSizeWidget> {
+  const PreferredApplicator._(PreferredSizeWidget Function(Widget) builder)
+      : super(builder);
 }

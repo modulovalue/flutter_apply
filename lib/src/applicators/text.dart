@@ -70,21 +70,23 @@ Applicator textProperties({
   int maxLines,
   TextOverflow overflow,
 }) {
-  return apply((child) => DefaultTextStyle.merge(
-        child: child,
-        textAlign: align,
-        maxLines: maxLines,
-        overflow: overflow,
-        style: TextStyle(
-          letterSpacing: letterSpacing,
-          fontSize: size,
-          fontWeight: weight,
-          fontFamily: family,
-          color: color,
-          fontStyle: italic ?? false ? FontStyle.italic : FontStyle.normal,
-          decoration: underline ?? false ? TextDecoration.underline : null,
-        ),
-      ));
+  return apply((child) {
+    return DefaultTextStyle.merge(
+      child: child,
+      textAlign: align,
+      maxLines: maxLines,
+      overflow: overflow,
+      style: TextStyle(
+        letterSpacing: letterSpacing,
+        fontSize: size,
+        fontWeight: weight,
+        fontFamily: family,
+        color: color,
+        fontStyle: (italic ?? false) ? FontStyle.italic : FontStyle.normal,
+        decoration: (underline ?? false) ? TextDecoration.underline : null,
+      ),
+    );
+  });
 }
 
 Applicator textSize(double size) => textProperties(size: size);
@@ -119,5 +121,6 @@ Applicator textAlignL() => textProperties(align: TextAlign.left);
 
 Applicator textAlignR() => textProperties(align: TextAlign.right);
 
-Applicator textMaxLine1WithEllipsis() =>
-    textProperties(maxLines: 1, overflow: TextOverflow.ellipsis);
+Applicator textMaxLine1WithEllipsis() {
+  return textProperties(maxLines: 1, overflow: TextOverflow.ellipsis);
+}
