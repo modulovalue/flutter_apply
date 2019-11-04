@@ -4,7 +4,10 @@ import 'package:flutter_apply/flutter_apply.dart';
 Applicator tabC({@required int length, int initialIndex = 0}) {
   return apply((child) {
     return DefaultTabController(
-        initialIndex: initialIndex, length: length, child: child);
+      initialIndex: initialIndex,
+      length: length,
+      child: child,
+    );
   });
 }
 

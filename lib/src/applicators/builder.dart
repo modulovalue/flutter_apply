@@ -12,5 +12,6 @@ Applicator onLayoutBuilder(
       builder: (context, constraints) => builder(context, constraints, child)));
 }
 
-Applicator applyContext(Applicator Function(BuildContext) builder) =>
-    onBuilder((context, child) => builder(context) > child);
+Applicator onContext(Applicator Function(BuildContext) builder) {
+  return onBuilder((context, child) => builder(context) > child);
+}

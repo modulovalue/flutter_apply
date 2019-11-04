@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_apply/flutter_apply.dart';
 
-ListApplicator onStack({Alignment alignment, StackFit fit, Overflow overflow}) {
+ListApplicator onStack({
+  Key key,
+  AlignmentDirectional alignment = AlignmentDirectional.topStart,
+  TextDirection textDirection,
+  StackFit fit = StackFit.loose,
+  Overflow overflow = Overflow.clip,
+}) {
   return listApply((children) {
     return Stack(
-      fit: fit ?? StackFit.loose,
-      overflow: overflow ?? Overflow.clip,
-      // topStart is the default, can't be null.
-      alignment: alignment ?? AlignmentDirectional.topStart,
+      key: key,
+      alignment: alignment,
+      textDirection: textDirection,
+      fit: fit,
+      overflow: overflow,
       children: children.toList(),
     );
   });

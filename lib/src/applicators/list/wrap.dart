@@ -8,33 +8,6 @@ double wrapSpacing(Iterable<Widget> children, double spacing) {
       : spacing;
 }
 
-ListApplicator onWrap({
-  Key key,
-  Axis direction = Axis.horizontal,
-  WrapAlignment alignment = WrapAlignment.start,
-  double spacing = 0.0,
-  WrapAlignment runAlignment = WrapAlignment.start,
-  double runSpacing = 0.0,
-  WrapCrossAlignment crossAxisAlignment = WrapCrossAlignment.start,
-  TextDirection textDirection,
-  VerticalDirection verticalDirection = VerticalDirection.down,
-}) {
-  return listApply((children) {
-    return Wrap(
-      key: key,
-      direction: direction,
-      alignment: alignment,
-      spacing: spacing,
-      runAlignment: runAlignment,
-      runSpacing: runSpacing,
-      crossAxisAlignment: crossAxisAlignment,
-      textDirection: textDirection,
-      verticalDirection: verticalDirection,
-      children: children.toList(),
-    );
-  });
-}
-
 ListApplicator onWrapCenter(
     {double spacing, double runSpacing, double allSpacing}) {
   return onWrap(
