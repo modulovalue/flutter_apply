@@ -5,12 +5,9 @@ import 'package:flutter_apply/flutter_apply.dart';
 ///
 /// An applies [apply] [Applicator] won't have
 /// an effect on participating [Applicator]s.
-// Can't be const because _id can't be const (toplevel functions with type
-// params can't be const?) throws a runtime error if set to const.
-// ignore: prefer_const_constructors
-final IDApplicator apply = IDApplicator._();
+const IDApplicator apply = IDApplicator._();
 
-T _id<T>(T t) => t;
+Widget _id(Widget t) => t;
 
 class IDApplicator extends Applicator {
   const IDApplicator._() : super._(_id);
