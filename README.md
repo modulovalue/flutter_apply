@@ -4,6 +4,15 @@
 
 ![example](assets/screenshot1.png)
 
+```yaml
+dependencies:
+  flutter_apply:
+    git:
+      url: git@github.com:modulovalue/flutter_apply.git
+      # take the newest commit id
+      ref: 4d043c82b67da2f8b011d030c4b62efd2d47b786
+```
+
 ```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_apply/flutter_apply.dart';
