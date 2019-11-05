@@ -77,10 +77,62 @@ class Applicator {
       return orElse ?? apply;
     }
   }
+
+  Applicator wait(Duration duration, {Object key}) {
+    return apply((child) {
+      return DelayedWidget(
+        key: ValueKey(key),
+        applicator: this,
+        duration: duration,
+        child: child,
+      );
+    });
+  }
 }
 
 class PreferredApplicator
     extends SecondClassApplicator<Widget, PreferredSizeWidget> {
   const PreferredApplicator._(PreferredSizeWidget Function(Widget) builder)
       : super(builder);
+}
+
+class DelayedWidget extends StatefulWidget {
+  final Widget child;
+  final Duration duration;
+  final Applicator applicator;
+
+  const DelayedWidget({
+    @required Key key,
+    @required this.child,
+    @required this.duration,
+    @required this.applicator,
+  }) : super(key: key);
+
+  @override
+  _DelayedWidgetState createState() => _DelayedWidgetState();
+}
+
+class _DelayedWidgetState extends State<DelayedWidget> {
+  bool wait = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future<void>.delayed(widget.duration).then((_) {
+      if (mounted) {
+        setState(() {
+          wait = false;
+        });
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (wait) {
+      return widget.child;
+    } else {
+      return widget.applicator > widget.child;
+    }
+  }
 }
